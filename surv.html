@@ -69,6 +69,17 @@
         .slot p {
             margin-top: 5px;
         }
+
+        .dropdown {
+            margin-top: 20px;
+        }
+
+        .dropdown select {
+            font-size: 16px;
+            padding: 5px 10px;
+            border-radius: 5px;
+            border: none;
+        }
     </style>
 </head>
 <body>
@@ -97,6 +108,17 @@
         </div>
     </div>
 
+    <div class="dropdown">
+        <select id="build-type" onchange="updatePerks()">
+            <option value="generator">Generator Focused</option>
+            <option value="healing">Healing Focused</option>
+            <option value="saving">Saving Focused</option>
+            <option value="meta">Meta Focused</option>
+            <option value="escaping">Escaping Focused</option>
+            <option value="random">Random</option>
+        </select>
+    </div>
+
     <div class="button-container">
         <a href="index.html">
             <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/3/35/Icon_publicTestBuild.png" alt="Go Back">
@@ -105,23 +127,34 @@
 
     <script>
         const slotImages = [
-            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/ace_in_the_hole.png', name: 'Ace In The Hole' },
-            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/adrenaline.png', name: 'Adrenaline' },
-            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/aftercare.png', name: 'Aftercare' },
-            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/alert.png', name: 'Alert' },
-            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/any_means_necessary.png', name: 'Any Means Necessary' },
-            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/appraisal.png', name: 'Appraisal' },
-            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/autodidact.png', name: 'Autodidact' },
-            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/babysitter.png', name: 'Babysitter' },
-            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/background_player.png', name: 'Background Player' },
-            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/balanced_landing.png', name: 'Balanced Landing' },
-            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/bardic_inspiration.png', name: 'Bardic Inspiration' },
-            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/better_together.png', name: 'Better Together' },
-            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/better_than_new.png', name: 'Better Than New' },
-            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/bite_the_bullet.png', name: 'Bite The Bullet' },
-            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/blast_mine.png', name: 'Blast Mine' },
-            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/blood_pact.png', name: 'Blood Pact' }
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/ace_in_the_hole.png', name: 'Ace In The Hole', type: 'Meta' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/adrenaline.png', name: 'Adrenaline', type: 'Meta' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/aftercare.png', name: 'Aftercare', type: 'Healing' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/alert.png', name: 'Alert', type: 'Escaping' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/any_means_necessary.png', name: 'Any Means Necessary', type: 'Meta' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/appraisal.png', name: 'Appraisal', type: 'Meta' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/autodidact.png', name: 'Autodidact', type: 'Healing' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/babysitter.png', name: 'Babysitter', type: 'Healing' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/background_player.png', name: 'Background Player', type: 'Saving' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/balanced_landing.png', name: 'Balanced Landing', type: 'Escaping' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/bardic_inspiration.png', name: 'Bardic Inspiration', type: 'Meta' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/better_together.png', name: 'Better Together', type: 'Genrator' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/better_than_new.png', name: 'Better Than New', type: 'Healing' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/bite_the_bullet.png', name: 'Bite The Bullet', type: 'Healing' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/blast_mine.png', name: 'Blast Mine', type: 'Generator' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/blood_pact.png', name: 'Blood Pact', type: 'Meta' }
         ];
+
+        let selectedPerks = [];
+
+        function updatePerks() {
+            const buildType = document.getElementById('build-type').value;
+            if (buildType === 'random') {
+                selectedPerks = slotImages;
+            } else {
+                selectedPerks = slotImages.filter(perk => perk.type.toLowerCase() === buildType);
+            }
+        }
 
         function startSlotMachine() {
             const slotMachine = document.getElementById('slot-machine');
@@ -130,7 +163,7 @@
             let counter = 0;
             const interval = setInterval(() => {
                 for (let i = 0; i < slots.length; i++) {
-                    const randomImage = slotImages[Math.floor(Math.random() * slotImages.length)];
+                    const randomImage = selectedPerks[Math.floor(Math.random() * selectedPerks.length)];
                     const imgElement = slots[i].getElementsByTagName('img')[0];
                     const pElement = slots[i].getElementsByTagName('p')[0];
                     imgElement.src = randomImage.url;
@@ -144,7 +177,7 @@
                     // Ensure unique images for the final selection
                     const selectedImages = [];
                     while (selectedImages.length < 4) {
-                        const randomImage = slotImages[Math.floor(Math.random() * slotImages.length)];
+                        const randomImage = selectedPerks[Math.floor(Math.random() * selectedPerks.length)];
                         if (!selectedImages.includes(randomImage)) {
                             selectedImages.push(randomImage);
                         }
@@ -156,6 +189,7 @@
                         imgElement.src = selectedImages[i].url;
                         imgElement.title = selectedImages[i].name;
                         pElement.textContent = selectedImages[i].name;
+
                     }
                 }
             }, 100);
