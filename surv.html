@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survivor Build Generator</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .header-text {
+            font-size: 36px;
+            margin-top: 20px;
+        }
+
+        .build-container {
+            margin-top: 50px;
+            width: 60%;
+            margin: auto;
+            padding: 20px;
+            border: 2px solid white;
+            border-radius: 10px;
+        }
+
+        .build-container img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .build-container .generate-text {
+            font-size: 24px;
+            margin: 20px 0;
+        }
+
+        .generate-button {
+            font-size: 18px;
+            padding: 10px 20px;
+            cursor: pointer;
+            background-color: red;
+            color: white;
+            border: none;
+            border-radius: 5px;
+        }
+
+        .slot-machine {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            overflow: hidden;
+            height: 100px;
+        }
+
+        .slot-machine img {
+            width: 100px;
+            height: 100px;
+            margin: 0 10px;
+            transition: transform 0.1s linear;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-text">Survivor Build Generator</div>
+    <div class="build-container">
+        <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/b/b3/IconHelpLoading_survivor.png" alt="Survivor">
+        <div class="generate-text">Generate Survivor Build</div>
+        <button class="generate-button" onclick="startSlotMachine()">Generate</button>
+        <div class="slot-machine" id="slot-machine">
+            <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/b/b3/IconHelpLoading_survivor.png" alt="Slot Image 1" title="Survivor">
+            <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/b/b3/IconHelpLoading_survivor.png" alt="Slot Image 2" title="Survivor">
+            <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/b/b3/IconHelpLoading_survivor.png" alt="Slot Image 3" title="Survivor">
+            <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/b/b3/IconHelpLoading_survivor.png" alt="Slot Image 4" title="Survivor">
+        </div>
+    </div>
+
+    <div class="button-container">
+        <a href="index.html">
+            <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/0/06/IconHelpLoading_killer.png" alt="Go Back">
+        </a>
+    </div>
+
+    <script>
+        const slotImages = [
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/ace_in_the_hole.png', name: 'Ace In The Hole' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/adrenaline.png', name: 'Adrenaline' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/aftercare.png', name: 'Aftercare' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/alert.png', name: 'Alert' }
+        ];
+
+        function startSlotMachine() {
+            const slotMachine = document.getElementById('slot-machine');
+            const images = slotMachine.getElementsByTagName('img');
+
+            let counter = 0;
+            const interval = setInterval(() => {
+                for (let i = 0; i < images.length; i++) {
+                    const randomImage = slotImages[Math.floor(Math.random() * slotImages.length)];
+                    images[i].src = randomImage.url;
+                    images[i].title = randomImage.name;
+                }
+                counter++;
+                if (counter > 20) {
+                    clearInterval(interval);
+
+                    // Ensure unique images for the final selection
+                    const selectedImages = [];
+                    while (selectedImages.length < 4) {
+                        const randomImage = slotImages[Math.floor(Math.random() * slotImages.length)];
+                        if (!selectedImages.includes(randomImage)) {
+                            selectedImages.push(randomImage);
+                        }
+                    }
+
+                    for (let i = 0; i < images.length; i++) {
+                        images[i].src = selectedImages[i].url;
+                        images[i].title = selectedImages[i].name;
+                    }
+                }
+            }, 100);
+        }
+    </script>
+</body>
+</html>
