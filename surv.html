@@ -52,14 +52,22 @@
             align-items: center;
             margin-top: 20px;
             overflow: hidden;
-            height: 100px;
+            height: 140px;
         }
 
-        .slot-machine img {
+        .slot {
+            text-align: center;
+            margin: 0 10px;
+        }
+
+        .slot img {
             width: 100px;
             height: 100px;
-            margin: 0 10px;
             transition: transform 0.1s linear;
+        }
+
+        .slot p {
+            margin-top: 5px;
         }
     </style>
 </head>
@@ -70,10 +78,22 @@
         <div class="generate-text">Generate Survivor Build</div>
         <button class="generate-button" onclick="startSlotMachine()">Generate</button>
         <div class="slot-machine" id="slot-machine">
-            <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/b/b3/IconHelpLoading_survivor.png" alt="Slot Image 1" title="Survivor">
-            <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/b/b3/IconHelpLoading_survivor.png" alt="Slot Image 2" title="Survivor">
-            <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/b/b3/IconHelpLoading_survivor.png" alt="Slot Image 3" title="Survivor">
-            <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/b/b3/IconHelpLoading_survivor.png" alt="Slot Image 4" title="Survivor">
+            <div class="slot">
+                <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/b/b3/IconHelpLoading_survivor.png" alt="Slot Image 1" title="Survivor">
+                <p>Survivor</p>
+            </div>
+            <div class="slot">
+                <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/b/b3/IconHelpLoading_survivor.png" alt="Slot Image 2" title="Survivor">
+                <p>Survivor</p>
+            </div>
+            <div class="slot">
+                <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/b/b3/IconHelpLoading_survivor.png" alt="Slot Image 3" title="Survivor">
+                <p>Survivor</p>
+            </div>
+            <div class="slot">
+                <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/b/b3/IconHelpLoading_survivor.png" alt="Slot Image 4" title="Survivor">
+                <p>Survivor</p>
+            </div>
         </div>
     </div>
 
@@ -92,19 +112,30 @@
             { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/any_means_necessary.png', name: 'Any Means Necessary' },
             { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/appraisal.png', name: 'Appraisal' },
             { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/autodidact.png', name: 'Autodidact' },
-            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/babysitter.png', name: 'Babysitter' }
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/babysitter.png', name: 'Babysitter' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/background_player.png', name: 'Background Player' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/balanced_landing.png', name: 'Balanced Landing' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/bardic_inspiration.png', name: 'Bardic Inspiration' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/better_together.png', name: 'Better Together' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/better_than_new.png', name: 'Better Than New' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/bite_the_bullet.png', name: 'Bite The Bullet' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/blast_mine.png', name: 'Blast Mine' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/blood_pact.png', name: 'Blood Pact' }
         ];
 
         function startSlotMachine() {
             const slotMachine = document.getElementById('slot-machine');
-            const images = slotMachine.getElementsByTagName('img');
+            const slots = slotMachine.getElementsByClassName('slot');
 
             let counter = 0;
             const interval = setInterval(() => {
-                for (let i = 0; i < images.length; i++) {
+                for (let i = 0; i < slots.length; i++) {
                     const randomImage = slotImages[Math.floor(Math.random() * slotImages.length)];
-                    images[i].src = randomImage.url;
-                    images[i].title = randomImage.name;
+                    const imgElement = slots[i].getElementsByTagName('img')[0];
+                    const pElement = slots[i].getElementsByTagName('p')[0];
+                    imgElement.src = randomImage.url;
+                    imgElement.title = randomImage.name;
+                    pElement.textContent = randomImage.name;
                 }
                 counter++;
                 if (counter > 20) {
@@ -119,9 +150,12 @@
                         }
                     }
 
-                    for (let i = 0; i < images.length; i++) {
-                        images[i].src = selectedImages[i].url;
-                        images[i].title = selectedImages[i].name;
+                    for (let i = 0; i < slots.length; i++) {
+                        const imgElement = slots[i].getElementsByTagName('img')[0];
+                        const pElement = slots[i].getElementsByTagName('p')[0];
+                        imgElement.src = selectedImages[i].url;
+                        imgElement.title = selectedImages[i].name;
+                        pElement.textContent = selectedImages[i].name;
                     }
                 }
             }, 100);
@@ -129,3 +163,4 @@
     </script>
 </body>
 </html>
+
