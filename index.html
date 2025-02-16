@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DBD Build Generator</title>
+    <style>
+        body {
+            background-color: black;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+
+        .blood-splatter {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            opacity: 0;
+            background-size: cover;
+            transition: opacity 2s ease-in-out;
+        }
+
+        .fade-out {
+            opacity: 0 !important;
+        }
+
+        .header-text {
+            font-size: 36px;
+            margin-top: 20px;
+        }
+
+        .center-text {
+            font-size: 24px;
+            margin-top: 200px;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        .button-container img {
+            width: 100px;
+            height: 100px;
+            margin: 0 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="header-text">DBD Build Generator</div>
+    <div class="center-text">Choose What Side You Want</div>
+    <div class="button-container">
+        <a href="killer.html">
+            <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/0/06/IconHelpLoading_killer.png" alt="Killer">
+        </a>
+        <a href="surv.html">
+            <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/b/b3/IconHelpLoading_survivor.png" alt="Survivor">
+        </a>
+    </div>
+
+    <script>
+        const bloodImages = [
+            'https://images.vexels.com/media/users/3/143405/isolated/preview/ea7fefc0fd132bc41819426ad91bbcd3-grunge-blood-splatter.png',
+            'https://static.vecteezy.com/system/resources/thumbnails/047/600/647/small/a-red-blood-splatter-cut-out-stock-png.png',
+            'https://www.pngplay.com/wp-content/uploads/13/Blood-Splatter-PNG-HD-Quality.png',
+            'https://rosepng.com/wp-content/uploads/elementor/thumbs/s11728_blood_splat_isolated_on_white_background_f8d46c99-3194-4266-a3c5-90c2a7740d2f_1-photoroom-qt86v7yu1g3tzuyyz5pn79g2z0bxzjwjfkzi42b2jk.png'
+        ];
+
+        function createBloodSplatter() {
+            const splatter = document.createElement('div');
+            splatter.classList.add('blood-splatter');
+            splatter.style.backgroundImage = `url(${bloodImages[Math.floor(Math.random() * bloodImages.length)]})`;
+            document.body.appendChild(splatter);
+
+            splatter.style.left = `${Math.random() * 100}%`;
+            splatter.style.top = `${Math.random() * 100}%`;
+
+            setTimeout(() => splatter.classList.add('fade-out'), 2000);
+            setTimeout(() => splatter.remove(), 4000);
+        }
+
+        setInterval(createBloodSplatter, 1000);
+    </script>
+</body>
+</html>
