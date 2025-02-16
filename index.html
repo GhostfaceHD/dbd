@@ -18,7 +18,11 @@
             height: 50px;
             opacity: 0;
             background-size: cover;
-            transition: opacity 2s ease-in-out;
+            transition: opacity 1s ease-in-out;
+        }
+
+        .fade-in {
+            opacity: 1 !important;
         }
 
         .fade-out {
@@ -75,6 +79,7 @@
 
             splatter.style.left = `${Math.random() * 100}%`;
             splatter.style.top = `${Math.random() * 100}%`;
+            setTimeout(() => splatter.classList.add('fade-in'), 10);
 
             setTimeout(() => splatter.classList.add('fade-out'), 2000);
             setTimeout(() => splatter.remove(), 4000);
