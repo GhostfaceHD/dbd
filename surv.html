@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Survivor Build Generator</title>
-    <link rel="icon" type="image/x-icon" href="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/b/b3/IconHelpLoading_survivor.png">
     <style>
         html, body {
             height: 100%;
@@ -19,57 +18,60 @@
             color: white;
             text-align: center;
             font-family: Arial, sans-serif;
+            font-size: 22px;
         }
         .top-left-btn {
             position: fixed;
-            top: 16px;
-            left: 16px;
+            top: 24px;
+            left: 24px;
             z-index: 1000;
             background: rgba(0,0,0,0.4);
-            border-radius: 8px;
-            padding: 4px;
+            border-radius: 12px;
+            padding: 8px;
             transition: background 0.2s;
         }
         .top-left-btn:hover {
             background: rgba(255,255,255,0.15);
         }
         .header-text {
-            font-size: 36px;
-            margin-top: 20px;
+            font-size: 54px;
+            margin-top: 40px;
         }
         .build-container {
-            margin-top: 50px;
-            width: 60%;
-            margin: auto;
-            padding: 20px;
-            border: 2px solid white;
-            border-radius: 10px;
-            background: rgba(0,0,0,0.4);
+            margin-top: 60px;
+            width: 90%;
+            max-width: 1400px;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 40px;
+            border: 3px solid white;
+            border-radius: 20px;
+            background: rgba(0,0,0,0.5);
         }
         .generate-button {
-            font-size: 18px;
-            padding: 10px 20px;
+            font-size: 32px;
+            padding: 18px 44px;
             cursor: pointer;
             background-color: red;
             color: white;
             border: none;
-            border-radius: 5px;
-            margin-bottom: 20px;
+            border-radius: 10px;
+            margin-bottom: 36px;
         }
         .slot-machine {
             display: flex;
             justify-content: center;
             align-items: flex-end;
-            margin-top: 20px;
-            gap: 16px;
+            margin-top: 40px;
+            gap: 36px;
         }
         .slot {
-            width: 110px;
-            height: 140px;
+            width: 260px;
+            height: 210px;
             overflow: hidden;
             background: rgba(0,0,0,0.7);
-            border-radius: 10px;
-            border: 2px solid #fff;
+            border-radius: 18px;
+            border: 3px solid #fff;
             position: relative;
         }
         .reel {
@@ -82,24 +84,26 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            height: 140px;
+            height: 210px;
             justify-content: center;
         }
         .reel-item img {
-            width: 100px;
-            height: 100px;
+            width: 170px;
+            height: 170px;
         }
         .reel-item p {
-            margin: 5px 0 0 0;
-            font-size: 16px;
+            margin: 10px 0 0 0;
+            font-size: 2em;
             color: #fff;
-            text-shadow: 1px 1px 4px #000;
+            text-shadow: 2px 2px 8px #000;
+            word-break: break-word;
+            max-width: 230px;
         }
     </style>
 </head>
 <body>
     <a href="index.html" class="top-left-btn" title="Back to Home">
-        <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/3/35/Icon_publicTestBuild.png" alt="Go Back" style="width:48px;height:48px;">
+        <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/3/35/Icon_publicTestBuild.png" alt="Go Back" style="width:64px;height:64px;">
     </a>
     <div class="header-text">Survivor Build Generator</div>
     <div class="build-container">
@@ -187,7 +191,7 @@
             { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/kindred.png', name: 'Kindred' },
             { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/leader.png', name: 'Leader' },
             { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/left_behind.png', name: 'Left Behind' },
-            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/light-footed.png', name: 'Light Footed' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/light_footed.png', name: 'Light Footed' },
             { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/lightweight.png', name: 'Lightweight' },
             { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/lithe.png', name: 'Lithe' }
         ];
@@ -244,7 +248,7 @@
             for (let i = 0; i < 4; i++) {
                 setTimeout(() => {
                     const reel = reelElems[i];
-                    const totalHeight = (spins[i] - 1) * 140; // 140px per item
+                    const totalHeight = (spins[i] - 1) * 210; // 210px per item
                     // Force reflow for transition to work
                     void reel.offsetWidth;
                     reel.style.transition = 'transform 2s cubic-bezier(.17,.67,.83,.67)';
