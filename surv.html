@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Survivor Build Generator</title>
     <style>
         html, body {
@@ -18,60 +18,60 @@
             color: white;
             text-align: center;
             font-family: Arial, sans-serif;
-            font-size: 22px;
+            font-size: 18px;
         }
         .top-left-btn {
             position: fixed;
-            top: 24px;
-            left: 24px;
+            top: 16px;
+            left: 16px;
             z-index: 1000;
             background: rgba(0,0,0,0.4);
-            border-radius: 12px;
-            padding: 8px;
+            border-radius: 8px;
+            padding: 6px;
             transition: background 0.2s;
         }
         .top-left-btn:hover {
             background: rgba(255,255,255,0.15);
         }
         .header-text {
-            font-size: 54px;
-            margin-top: 40px;
+            font-size: 42px;
+            margin-top: 30px;
         }
         .build-container {
-            margin-top: 60px;
-            width: 90%;
-            max-width: 1400px;
+            margin-top: 40px;
+            width: 80%;
+            max-width: 1100px;
             margin-left: auto;
             margin-right: auto;
-            padding: 40px;
-            border: 3px solid white;
-            border-radius: 20px;
-            background: rgba(0,0,0,0.5);
+            padding: 30px;
+            border: 2px solid white;
+            border-radius: 15px;
+            background: rgba(0,0,0,0.4);
         }
         .generate-button {
-            font-size: 32px;
-            padding: 18px 44px;
+            font-size: 26px;
+            padding: 14px 36px;
             cursor: pointer;
             background-color: red;
             color: white;
             border: none;
-            border-radius: 10px;
-            margin-bottom: 36px;
+            border-radius: 8px;
+            margin-bottom: 28px;
         }
         .slot-machine {
             display: flex;
             justify-content: center;
             align-items: flex-end;
-            margin-top: 40px;
-            gap: 36px;
+            margin-top: 30px;
+            gap: 24px;
         }
         .slot {
-            width: 260px;
-            height: 210px;
+            width: 180px;
+            height: 160px;
             overflow: hidden;
             background: rgba(0,0,0,0.7);
-            border-radius: 18px;
-            border: 3px solid #fff;
+            border-radius: 14px;
+            border: 2px solid #fff;
             position: relative;
         }
         .reel {
@@ -84,26 +84,26 @@
             display: flex;
             flex-direction: column;
             align-items: center;
-            height: 210px;
+            height: 160px;
             justify-content: center;
         }
         .reel-item img {
-            width: 170px;
-            height: 170px;
+            width: 130px;
+            height: 130px;
         }
         .reel-item p {
-            margin: 10px 0 0 0;
-            font-size: 2em;
+            margin: 6px 10px 0 10px;
+            font-size: 1.3em;
             color: #fff;
-            text-shadow: 2px 2px 8px #000;
+            text-shadow: 1px 1px 4px #000;
             word-break: break-word;
-            max-width: 230px;
+            max-width: 160px;
         }
     </style>
 </head>
 <body>
     <a href="index.html" class="top-left-btn" title="Back to Home">
-        <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/3/35/Icon_publicTestBuild.png" alt="Go Back" style="width:64px;height:64px;">
+        <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/3/35/Icon_publicTestBuild.png" alt="Go Back" style="width:48px;height:48px;" />
     </a>
     <div class="header-text">Survivor Build Generator</div>
     <div class="build-container">
@@ -208,7 +208,6 @@
         }
 
         function buildReelSequence(finalPerk, spins = 20) {
-            // Create a sequence of random perks, ending with the finalPerk
             const sequence = [];
             for (let i = 0; i < spins - 1; i++) {
                 sequence.push(slotImages[Math.floor(Math.random() * slotImages.length)]);
@@ -228,15 +227,12 @@
         }
 
         function startSlotMachine() {
-            const slotElems = document.querySelectorAll('.slot');
             const reelElems = document.querySelectorAll('.reel');
-            const spins = [24, 32, 40, 48]; // Number of items to scroll for each slot
-            const delays = [0, 600, 1200, 1800]; // ms delay before stopping each slot
+            const spins = [24, 32, 40, 48];
+            const delays = [0, 600, 1200, 1800];
 
-            // Pick unique final perks
             const finalPerks = getUniqueRandomImages(4);
 
-            // For each slot, build and render the reel
             for (let i = 0; i < 4; i++) {
                 const sequence = buildReelSequence(finalPerks[i], spins[i]);
                 renderReel(reelElems[i], sequence);
@@ -244,12 +240,10 @@
                 reelElems[i].style.transform = 'translateY(0)';
             }
 
-            // Animate each reel
             for (let i = 0; i < 4; i++) {
                 setTimeout(() => {
                     const reel = reelElems[i];
-                    const totalHeight = (spins[i] - 1) * 210; // 210px per item
-                    // Force reflow for transition to work
+                    const totalHeight = (spins[i] - 1) * 160; // 160px per item height
                     void reel.offsetWidth;
                     reel.style.transition = 'transform 2s cubic-bezier(.17,.67,.83,.67)';
                     reel.style.transform = `translateY(-${totalHeight}px)`;
@@ -257,7 +251,6 @@
             }
         }
 
-        // Initialize with random perks
         window.onload = () => {
             const reelElems = document.querySelectorAll('.reel');
             for (let i = 0; i < 4; i++) {
