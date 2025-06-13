@@ -2,31 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Survivor Build Generator</title>
     <style>
         html, body {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-}
-
-body {
-    min-height: 100vh;
-    background-image: url('https://us.v-cdn.net/6030815/uploads/DUR9NT0BFIVJ/u5gsn5x658y71.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center center;
-    color: white;
-    text-align: center;
-    font-family: Arial, sans-serif;
-}
-
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            min-height: 100vh;
+            background-image: url('https://us.v-cdn.net/6030815/uploads/DUR9NT0BFIVJ/u5gsn5x658y71.png');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-position: center center;
+            color: white;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        .top-left-btn {
+            position: fixed;
+            top: 16px;
+            left: 16px;
+            z-index: 1000;
+            background: rgba(0,0,0,0.4);
+            border-radius: 8px;
+            padding: 4px;
+            transition: background 0.2s;
+        }
+        .top-left-btn:hover {
+            background: rgba(255,255,255,0.15);
+        }
         .header-text {
             font-size: 36px;
             margin-top: 20px;
         }
-
         .build-container {
             margin-top: 50px;
             width: 60%;
@@ -34,18 +43,8 @@ body {
             padding: 20px;
             border: 2px solid white;
             border-radius: 10px;
+            background: rgba(0,0,0,0.4);
         }
-
-        .build-container img {
-            width: 100px;
-            height: 100px;
-        }
-
-        .build-container .generate-text {
-            font-size: 24px;
-            margin: 20px 0;
-        }
-
         .generate-button {
             font-size: 18px;
             padding: 10px 20px;
@@ -54,76 +53,63 @@ body {
             color: white;
             border: none;
             border-radius: 5px;
+            margin-bottom: 20px;
         }
-
         .slot-machine {
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-end;
             margin-top: 20px;
-            overflow: hidden;
-            height: 140px;
+            gap: 16px;
         }
-
         .slot {
-            text-align: center;
-            margin: 0 10px;
+            width: 110px;
+            height: 140px;
+            overflow: hidden;
+            background: rgba(0,0,0,0.7);
+            border-radius: 10px;
+            border: 2px solid #fff;
+            position: relative;
         }
-
-        .slot img {
+        .reel {
+            position: absolute;
+            width: 100%;
+            left: 0;
+            transition: transform 0.4s cubic-bezier(.17,.67,.83,.67);
+        }
+        .reel-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 140px;
+            justify-content: center;
+        }
+        .reel-item img {
             width: 100px;
             height: 100px;
-            transition: transform 0.1s linear;
         }
-
-        .slot p {
-            margin-top: 5px;
-        }
-
-        .dropdown {
-            margin-top: 20px;
-        }
-
-        .dropdown select {
+        .reel-item p {
+            margin: 5px 0 0 0;
             font-size: 16px;
-            padding: 5px 10px;
-            border-radius: 5px;
-            border: none;
+            color: #fff;
+            text-shadow: 1px 1px 4px #000;
         }
     </style>
 </head>
 <body>
+    <a href="index.html" class="top-left-btn" title="Back to Home">
+        <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/3/35/Icon_publicTestBuild.png" alt="Go Back" style="width:48px;height:48px;">
+    </a>
     <div class="header-text">Survivor Build Generator</div>
     <div class="build-container">
-        <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/b/b3/IconHelpLoading_survivor.png" alt="Survivor">
-        <div class="generate-text">Generate Survivor Build</div>
         <button class="generate-button" onclick="startSlotMachine()">Generate</button>
         <div class="slot-machine" id="slot-machine">
-            <div class="slot">
-                <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/b/b3/IconHelpLoading_survivor.png" alt="Slot Image 1" title="Survivor">
-                <p>Survivor</p>
-            </div>
-            <div class="slot">
-                <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/b/b3/IconHelpLoading_survivor.png" alt="Slot Image 2" title="Survivor">
-                <p>Survivor</p>
-            </div>
-            <div class="slot">
-                <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/b/b3/IconHelpLoading_survivor.png" alt="Slot Image 3" title="Survivor">
-                <p>Survivor</p>
-            </div>
-            <div class="slot">
-                <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/b/b3/IconHelpLoading_survivor.png" alt="Slot Image 4" title="Survivor">
-                <p>Survivor</p>
-            </div>
+            <div class="slot"><div class="reel"></div></div>
+            <div class="slot"><div class="reel"></div></div>
+            <div class="slot"><div class="reel"></div></div>
+            <div class="slot"><div class="reel"></div></div>
         </div>
     </div>
-
-    <div class="button-container">
-        <a href="index.html">
-            <img src="https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/3/35/Icon_publicTestBuild.png" alt="Go Back">
-        </a>
-    </div>
-
     <script>
         const slotImages = [
             { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/ace_in_the_hole.png', name: 'Ace In The Hole' },
@@ -151,7 +137,7 @@ body {
             { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/boon_illumination.png', name: 'Boon: Illumination' },
             { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/boon_shadow_step.png', name: 'Boon: Shadow Step' },
             { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/borrowed_time.png', name: 'Borrowed Time' },
-            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/botany_knowledge.png', name: 'Botany Knoledge' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/botany_knowledge.png', name: 'Botany Knowledge' },
             { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/breakdown.png', name: 'Breakdown' },
             { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/breakout.png', name: 'Breakout' },
             { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/buckle_up.png', name: 'Buckle Up' },
@@ -188,12 +174,12 @@ body {
             { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/flip-flop.png', name: 'Flip Flop' },
             { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/fogwise.png', name: 'Fogwise' },
             { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/for_the_people.png', name: 'For The People' },
-            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/friendly_competition.png', name: 'Friendly Competion' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/friendly_competition.png', name: 'Friendly Competition' },
             { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/head_on.png', name: 'Head On' },
             { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/hope.png', name: 'Hope' },
-            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/hyperfocus.png', name: 'Hyperfocused' },
-            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/inner_focus.png', name: 'Innerfocus' },
-            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/inner_strength.png', name: 'Inner Strengh' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/hyperfocus.png', name: 'Hyperfocus' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/inner_focus.png', name: 'Inner Focus' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/inner_strength.png', name: 'Inner Strength' },
             { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/invocation_weaving_spiders.png', name: 'Invocation: Weaving Spiders' },
             { url: 'https://static.wikia.nocookie.net/deadbydaylight_gamepedia_en/images/a/a8/IconPerks_invocationTreacherousCrows.png/', name: 'Invocation: Treacherous Crows' },
             { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/iron_will.png', name: 'Iron Will' },
@@ -202,47 +188,78 @@ body {
             { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/left_behind.png', name: 'Left Behind' },
             { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/light_footed.png', name: 'Light Footed' },
             { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/lightweight.png', name: 'Lightweight' },
-            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/lithe.png', name: 'Lithe' },
+            { url: 'https://gigglingcorpse.com/dev/deadbydaylight/images/lithe.png', name: 'Lithe' }
         ];
 
-        function startSlotMachine() {
-            const slotMachine = document.getElementById('slot-machine');
-            const slots = slotMachine.getElementsByClassName('slot');
-
-            let counter = 0;
-            const interval = setInterval(() => {
-                for (let i = 0; i < slots.length; i++) {
-                    const randomImage = slotImages[Math.floor(Math.random() * slotImages.length)];
-                    const imgElement = slots[i].getElementsByTagName('img')[0];
-                    const pElement = slots[i].getElementsByTagName('p')[0];
-                    imgElement.src = randomImage.url;
-                    imgElement.title = randomImage.name;
-                    pElement.textContent = randomImage.name;
+        function getUniqueRandomImages(count) {
+            const selected = [];
+            while (selected.length < count) {
+                const candidate = slotImages[Math.floor(Math.random() * slotImages.length)];
+                if (!selected.some(img => img.url === candidate.url)) {
+                    selected.push(candidate);
                 }
-                counter++;
-                if (counter > 20) {
-                    clearInterval(interval);
-
-                    // Ensure unique images for the final selection
-                    const selectedImages = [];
-                    while (selectedImages.length < 4) {
-                        const randomImage = slotImages[Math.floor(Math.random() * slotImages.length)];
-                        if (!selectedImages.includes(randomImage)) {
-                            selectedImages.push(randomImage);
-                        }
-                    }
-
-                    for (let i = 0; i < slots.length; i++) {
-                        const imgElement = slots[i].getElementsByTagName('img')[0];
-                        const pElement = slots[i].getElementsByTagName('p')[0];
-                        imgElement.src = selectedImages[i].url;
-                        imgElement.title = selectedImages[i].name;
-                        pElement.textContent = selectedImages[i].name;
-                    }
-                }
-            }, 100);
+            }
+            return selected;
         }
+
+        function buildReelSequence(finalPerk, spins = 20) {
+            // Create a sequence of random perks, ending with the finalPerk
+            const sequence = [];
+            for (let i = 0; i < spins - 1; i++) {
+                sequence.push(slotImages[Math.floor(Math.random() * slotImages.length)]);
+            }
+            sequence.push(finalPerk);
+            return sequence;
+        }
+
+        function renderReel(reelElem, sequence) {
+            reelElem.innerHTML = '';
+            sequence.forEach(perk => {
+                const item = document.createElement('div');
+                item.className = 'reel-item';
+                item.innerHTML = `<img src="${perk.url}" title="${perk.name}"><p>${perk.name}</p>`;
+                reelElem.appendChild(item);
+            });
+        }
+
+        function startSlotMachine() {
+            const slotElems = document.querySelectorAll('.slot');
+            const reelElems = document.querySelectorAll('.reel');
+            const spins = [24, 32, 40, 48]; // Number of items to scroll for each slot
+            const delays = [0, 600, 1200, 1800]; // ms delay before stopping each slot
+
+            // Pick unique final perks
+            const finalPerks = getUniqueRandomImages(4);
+
+            // For each slot, build and render the reel
+            for (let i = 0; i < 4; i++) {
+                const sequence = buildReelSequence(finalPerks[i], spins[i]);
+                renderReel(reelElems[i], sequence);
+                reelElems[i].style.transition = 'none';
+                reelElems[i].style.transform = 'translateY(0)';
+            }
+
+            // Animate each reel
+            for (let i = 0; i < 4; i++) {
+                setTimeout(() => {
+                    const reel = reelElems[i];
+                    const totalHeight = (spins[i] - 1) * 140; // 140px per item
+                    // Force reflow for transition to work
+                    void reel.offsetWidth;
+                    reel.style.transition = 'transform 2s cubic-bezier(.17,.67,.83,.67)';
+                    reel.style.transform = `translateY(-${totalHeight}px)`;
+                }, delays[i]);
+            }
+        }
+
+        // Initialize with random perks
+        window.onload = () => {
+            const reelElems = document.querySelectorAll('.reel');
+            for (let i = 0; i < 4; i++) {
+                const perk = slotImages[Math.floor(Math.random() * slotImages.length)];
+                renderReel(reelElems[i], [perk]);
+            }
+        };
     </script>
 </body>
 </html>
-
